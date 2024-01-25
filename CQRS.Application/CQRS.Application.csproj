@@ -21,4 +21,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DIRegister\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CQRS.Domain\CQRS.Domain.csproj" />
+    <ProjectReference Include="..\CQRS.Infrastructure\CQRS.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

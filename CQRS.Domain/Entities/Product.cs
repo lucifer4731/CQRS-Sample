@@ -34,5 +34,8 @@ namespace CQRS.Domain.Entities
         [DisplayName("Is Available")]
         [Required(ErrorMessage = "{0} is required")]
         public bool IsAvailable { get; set; } = false;
+
+        [Required]
+        public Guid CreatorPerson { get; set; }
     }
 }

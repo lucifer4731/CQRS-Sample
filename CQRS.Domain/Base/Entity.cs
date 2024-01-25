@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,12 @@ namespace CQRS.Domain.Base
         [Required]
         public TKey Id { get; set; }
 
-        [MaxLength(500)]
+        [DisplayName("Description")]
+        [MaxLength(500, ErrorMessage = "{0 could not be more than 500 characters}")]
         public string? Description { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }
-
-        [Required]
-        public Guid CreatorPerson { get; set; }
 
         public DateTime? LastUpdateDate { get; set; }
 
