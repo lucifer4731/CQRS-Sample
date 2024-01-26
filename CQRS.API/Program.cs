@@ -11,6 +11,7 @@ using Serilog;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using CQRS.API.DIRegister;
 
 
 //#region Serilog Configuration 
@@ -79,7 +80,7 @@ builder.Services.AddAuthentication(x =>
           });
 
 #endregion
-
+builder.Services.AddSwagger();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
