@@ -10,9 +10,9 @@ namespace CQRS.Infrastructure.PatternImplementations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly SQLContext context;
+        private readonly CQRSContext context;
 
-        public UnitOfWork(SQLContext context)
+        public UnitOfWork(CQRSContext context)
         {
             this.context = context;
         }

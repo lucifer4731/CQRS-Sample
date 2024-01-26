@@ -13,15 +13,16 @@ namespace CQRS.API.Controllers
     {
         private readonly EncryptionUtility encryptionUtility;
         private readonly IMediator mediator;
-        private readonly ILogger logger;
+        //private readonly ILogger logger;
 
-        public AuthenticationController(EncryptionUtility encryptionUtility,IMediator mediator,ILogger logger)
+        public AuthenticationController(EncryptionUtility encryptionUtility,IMediator mediator)
         {
             this.encryptionUtility = encryptionUtility;
             this.mediator = mediator;
-            this.logger = logger;
+           // this.logger = logger;
         }
 
+        [HttpPost]
         public async Task<IActionResult> SigneIn([FromQuery] GetUserByUserNameQuery getUserByUserNameQuery)
         {
             var user = await mediator.Send(getUserByUserNameQuery);
@@ -45,12 +46,12 @@ namespace CQRS.API.Controllers
                     UserName = user.User.UserName,
                     Token = token
                 };
-                logger.LogInformation($"User login : {user.User.FullName} - {user.User.Id} Date:{DateTime.Now} - status : successfull ");
+                //logger.LogInformation($"User login : {user.User.FullName} - {user.User.Id} Date:{DateTime.Now} - status : successfull ");
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                logger.LogError($"User login :  {user.User.FullName} - {user.User.Id} Date:{DateTime.Now} - status : failed - Exception : {ex.Message}");
+                //logger.LogError($"User login :  {user.User.FullName} - {user.User.Id} Date:{DateTime.Now} - status : failed - Exception : {ex.Message}");
                 return BadRequest("Request failed, please try again");
             }
         }

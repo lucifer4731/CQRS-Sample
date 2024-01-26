@@ -11,12 +11,12 @@ namespace CQRS.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
-        private readonly ILogger logger;
+        //private readonly ILogger logger;
 
-        public UserController(IMediator mediator, ILogger logger)
+        public UserController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.logger = logger;
+            //this.logger = logger;
         }
 
         [HttpPost]
@@ -25,12 +25,12 @@ namespace CQRS.API.Controllers
             try
             {
                 var result = await mediator.Send(createUserCommand);
-                logger.LogInformation($"crete new user : - current user id : {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value} - created user : {createUserCommand.UserName} - Date:{DateTime.Now} - status : successfull ");
+                //logger.LogInformation($"crete new user : - current user id : {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value} - created user : {createUserCommand.UserName} - Date:{DateTime.Now} - status : successfull ");
                 return Ok(result.UserId);
             }
             catch (Exception ex)
             {
-                logger.LogInformation($"crete new user : - current user id : {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value} - Date:{DateTime.Now} - status : failed - Erroe Message : {ex.Message}");
+                //logger.LogInformation($"crete new user : - current user id : {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value} - Date:{DateTime.Now} - status : failed - Erroe Message : {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

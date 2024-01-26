@@ -22,8 +22,6 @@ namespace CQRS.Domain.Entities
         public string UserName { get; set; }
 
         [DisplayName("Password")]
-        [MaxLength(50, ErrorMessage = "{0} could not be more than {1} characters")]
-        [MinLength(8, ErrorMessage = "{0} could not be more than {2} characters")]
         [Required(ErrorMessage = "{0} is required")]
         public string Password { get; set; }
     }

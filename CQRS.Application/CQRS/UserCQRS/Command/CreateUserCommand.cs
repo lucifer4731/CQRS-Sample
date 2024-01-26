@@ -43,7 +43,7 @@ namespace CQRS.Application.CQRS.UserCQRS.Command
             try
             {
                 var salt = encryptionUtility.GetNewSalt();
-                var hashPassword = encryptionUtility.GetSHA256(request.Password, salt);
+                var hashPassword = encryptionUtility.GetSHA256(request.Password);
 
                 User user = new User
                 {

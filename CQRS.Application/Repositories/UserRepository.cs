@@ -12,10 +12,10 @@ namespace CQRS.Application.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly SQLContext context;
+        private readonly CQRSContext context;
         private readonly IUnitOfWork unitOfWork;
 
-        public UserRepository(SQLContext context, IUnitOfWork unitOfWork)
+        public UserRepository(CQRSContext context, IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.context = context;
@@ -25,7 +25,6 @@ namespace CQRS.Application.Repositories
         {
             user.CreateDate = DateTime.Now;
             await context.Users.AddAsync(user);
-            await unitOfWork.SaveChangesAsync();
             return user.Id;
         }
 
