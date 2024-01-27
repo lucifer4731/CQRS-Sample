@@ -11,5 +11,6 @@ namespace CQRS.Domain.IRepositories
     {
         Task<User> GetUserByUserNameAsync(string userName);
         Task<Guid> AddUserAsync(User user);
+        Task<Guid> GetLoggedInUserIdAsync();
     }
 }

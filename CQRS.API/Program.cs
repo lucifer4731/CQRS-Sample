@@ -12,6 +12,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using CQRS.API.DIRegister;
+using CQRS.Application.AutoMapperProfiles;
 
 
 //#region Serilog Configuration 
@@ -49,12 +50,24 @@ builder.Services.AddDbContext<CQRSContext>(options =>
 
 #region DI
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<User>();
 builder.Services.AddScoped<Product>();
 builder.Services.AddSingleton<EncryptionUtility>();
 builder.Services.AddMediatRApi();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 #endregion
+
+#region AutoMapper config
+var config = new AutoMapper.MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new MappingProfiles());
+});
+var mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+#endregion
+
 builder.Services.AddHttpContextAccessor();
 #region JWT Authentication
 var tokenTimeOut = builder.Configuration.GetValue<int>("Configs:TokenTimeOut");
@@ -83,12 +96,22 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddSwagger();
 var app = builder.Build();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<CQRSContext>();
+    context.Database.Migrate();
+}
+
+
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
